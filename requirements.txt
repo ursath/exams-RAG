@@ -1,0 +1,23 @@
+# Environment
+python-dotenv
+
+# OCR & PDF
+pypdf
+PyMuPDF
+pdf2image
+pytesseract
+
+# LangChain
+langchain
+langchain-community
+
+# OpenAI
+openai
+langchain-openai
+
+# Chroma
+# langchain-chroma
+
+# Pinecone
+# pinecone-client
+# langchain-pinecone
