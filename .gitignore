@@ -35,6 +35,9 @@ MANIFEST
 # Logs
 logs/
 
+# pdf parsing
+docs/exams/*/*.txt
+
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
