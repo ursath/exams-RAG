@@ -7,6 +7,9 @@ PyMuPDF
 pdf2image
 pytesseract
 
+# AWS
+boto3
+
 # LangChain
 langchain
 langchain-community
