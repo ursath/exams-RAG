@@ -1,6 +1,29 @@
 # Exams RAG
 
-## Creating the environment
+## Pre-processing
+
+### Exams Loader
+
+The `exams_loader.py` file is used to retrieve the exams and the syllabus for a specific subject.
+To run this module, use the following command
+
+```sh
+(.venv) $> python -m src/loaders/exams_loader.py --subject_dir={subject_dir}
+```
+
+where `{subject_dir}` is the directory where the exams and syllabus are located with the following structure:
+
+```
+{subject_dir}
+├── exams
+│   ├── {subject}-{ISO Date}.pdf
+│   ├── ...
+└── syllabus.txt
+```
+
+## FAQ
+
+### How do I create a local environment?
 
 In order to make sure we use the correct dependencies locally, we'll need to set up the environment.
 To do that, run the following command:
@@ -9,7 +32,7 @@ To do that, run the following command:
 $> python3 -m venv .venv
 ```
 
-## Using the environment
+### How do I use the environment?
 
 To use the created environment, you'll need to run the following command:
 
@@ -17,15 +40,15 @@ To use the created environment, you'll need to run the following command:
 $> source .venv/bin/activate
 ```
 
-## Installing dependencies
+### How do I install the dependencies on my local environment?
 
 After using the environment with the `source` command, you'll need to install the dependencies with the following command:
 
 ```sh
-$> pip install -r requirements.txt
+(.venv) $> pip install -r requirements.txt
 ```
 
-## How to run the different modules
+### How do I run the different modules?
 
 In order to run the different python modules, you'll need to do the following steps:
 
@@ -43,5 +66,5 @@ $> touch src/repositories/__init__.py
 2. Imagine we have a Python file called `testing_repository.py` inside the `src/repositories` directory. Then, we'd run the following command:
 
 ```sh
-$> python -m src.repositories.testing_repository
+(.venv) $> python -m src.repositories.testing_repository
 ```
