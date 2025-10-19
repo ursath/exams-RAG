@@ -7,7 +7,7 @@ class EnvironmentService:
   def __init__(self):
     load_dotenv(find_dotenv())
 
-  def get(self, key: str) -> Optional[str]:
+  def get(self, key: str) -> str:
     """
     Retrieves an environment variable by key.
     Returns None if the variable is not set.
@@ -48,5 +48,14 @@ class EnvironmentService:
       KeyError: if the API key is missing from the `.env` file.
     """
     return self.get("OPENAI_API_KEY")
+  
+  def get_max_workers(self) -> int:
+    """
+    Retrieves the maximum number of workers. Defaults to 5.
+    """
+    try:
+      return int(self.get("MAX_WORKERS"))
+    except KeyError:
+      return 5
     
 environment_service = EnvironmentService()

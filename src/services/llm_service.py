@@ -21,9 +21,17 @@ class LLMService:
       system_instructions=system_instructions,
       file_ids=file_ids
     )
+  
+  def upload_files(self, dir: str) -> List[str]:
+    return self._provider.upload_files(dir)
+
   def upload_file(self, path: str) -> str:
-    return self._provider.upload_file(
-      path=path
-    )
+    return self._provider.upload_file(path)
+  
+  def delete_files(self, file_ids: List[str]) -> None:
+    self._provider.delete_files(file_ids)
+  
+  def delete_file(self, file_id: str) -> None:
+    self._provider.delete_file(file_id)
     
 llm_service = LLMService(openai_provider)

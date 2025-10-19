@@ -3,13 +3,17 @@ from src.services.environment_service import environment_service
 from openai.types import ResponsesModel
 from openai.types.responses import ResponseStreamEvent, ResponseInputFileParam, ResponseInputTextParam
 from openai.types.responses.response_input_param import Message
-from typing import Optional, List
+from typing import Optional, List, override
+from glob import glob
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from os.path import join
 import openai
 
 class OpenAIProvider(Provider):
-  def __init__(self, api_key: str):
+  def __init__(self, api_key: str, max_workers: int):
+    self._max_workers = max_workers;
     openai.api_key = api_key
-    
+
   def _augment_file_ids(self, file_ids: List[str]) -> List[ResponseInputFileParam]:
     return [
       {
@@ -49,6 +53,7 @@ class OpenAIProvider(Provider):
     
     return system_prompt + text_prompt + file_prompt
   
+  @override
   def prompt(
     self,
     text_prompt: str,
@@ -68,7 +73,19 @@ class OpenAIProvider(Provider):
     )
     
     # TODO: handle the response
-    
+  
+  @override
+  def upload_files(self, dir: str) -> List[str]:
+    file_paths = glob(f"{dir}/*")
+    file_ids = []
+    with ThreadPoolExecutor(max_workers=self._max_workers) as executor:
+      future_to_path = {executor.submit(self.upload_file, p): p for p in file_paths}
+      for future in as_completed(future_to_path):
+        file_id = future.result()
+        file_ids.append(file_id)
+    return file_ids
+
+  @override
   def upload_file(self, path: str) -> str:
     with open(path, "rb") as f:
       response = openai.files.create(
@@ -77,4 +94,13 @@ class OpenAIProvider(Provider):
       )
     return response.id
   
-openai_provider = OpenAIProvider(environment_service.get_openai_api_key())
+  @override
+  def delete_file(self, file_id: str) -> None:
+    openai.files.delete(file_id)
+  
+  @override
+  def delete_files(self, file_ids: list[str]) -> None:
+    with ThreadPoolExecutor(max_workers=self._max_workers) as executor:
+      executor.map(self.delete_file, file_ids)
+  
+openai_provider = OpenAIProvider(environment_service.get_openai_api_key(), environment_service.get_max_workers())
