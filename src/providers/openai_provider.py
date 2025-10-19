@@ -1,9 +1,9 @@
 from .provider import Provider
 from src.services.environment_service import environment_service
 from openai.types import ResponsesModel
-from openai.types.responses import ResponseStreamEvent, ResponseInputFileParam, ResponseInputTextParam
+from openai.types.responses import ResponseInputFileParam, ResponseInputTextParam, Response
 from openai.types.responses.response_input_param import Message
-from typing import Optional, List, override
+from typing import Optional, List, override, overload, Generator, Union
 from glob import glob
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from os.path import join
@@ -53,26 +53,48 @@ class OpenAIProvider(Provider):
     
     return system_prompt + text_prompt + file_prompt
   
-  @override
+  @overload
+  def prompt(self, text_prompt: Optional[str] = None, model: Optional[str] = "gpt-4.1",
+    temperature: Optional[float] = 0.3, system_instructions: Optional[str] = None,
+    file_ids: List[str] = [], stream: bool = False) -> str: ...
+
+  @overload
+  def prompt(self, text_prompt: Optional[str] = None, model: Optional[str] = "gpt-4.1",
+    temperature: Optional[float] = 0.3, system_instructions: Optional[str] = None,
+    file_ids: List[str] = [], stream: bool = True) -> Generator[str, None, None]: ...
+
   def prompt(
     self,
-    text_prompt: str,
-    model: Optional[ResponsesModel] = "gpt-4.1",
-    temperature: Optional[float] = 0.3, 
+    text_prompt: Optional[str] = None,
+    model: Optional[str] = "gpt-4.1",
+    temperature: Optional[float] = 0.3,
     system_instructions: Optional[str] = None,
-    file_ids: List[str] = []
-  ) -> str:
-    
+    file_ids: List[str] = [],
+    stream: bool = False
+  ) -> Union[str, Generator[str, None, None]]:
     input = self._get_augmented_input(text_prompt, system_instructions, file_ids)
     
-    response: openai.Stream[ResponseStreamEvent] = openai.responses.create(
-      stream=True,
-      model=model,
-      input=input,
-      temperature=temperature
-    )
-    
-    # TODO: handle the response
+    if not input:
+      return "" if not stream else iter([])
+
+    if stream:
+      def gen():
+        with openai.responses.stream(
+          model=model,
+          input=input,
+          temperature=temperature
+        ) as stream_response:
+          for event in stream_response:
+            if hasattr(event, "delta") and event.delta is not None:
+              yield event.delta
+      return gen()
+    else:
+      response: Response = openai.responses.create(
+        model=model,
+        input=input,
+        temperature=temperature
+      )
+      return response.output_text
   
   @override
   def upload_files(self, dir: str) -> List[str]:

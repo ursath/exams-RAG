@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, overload, Union, Generator
 from src.providers.provider import Provider
 from src.providers.openai_provider import openai_provider
 
@@ -6,20 +6,40 @@ class LLMService:
   def __init__(self, provider: Provider):
     self._provider = provider
     
+  @overload
   def prompt(
     self,
-    text_prompt: str,
-    model: str = "gpt-4.1",
-    temperature: Optional[float] = 0.3, 
+    text_prompt: Optional[str] = None,
     system_instructions: Optional[str] = None,
-    file_ids: List[str] = []
-  ) -> str:
+    model: str = "",
+    file_ids: List[str] = [],
+    stream: bool = False
+  ) -> str: ...
+  
+  @overload
+  def prompt(
+    self,
+    text_prompt: Optional[str] = None,
+    system_instructions: Optional[str] = None,
+    model: str = "",
+    file_ids: List[str] = [],
+    stream: bool = True
+  ) -> Generator[str, None, None]: ...
+
+  def prompt(
+    self,
+    text_prompt: Optional[str] = None,
+    system_instructions: Optional[str] = None,
+    model: str = "",
+    file_ids: List[str] = [],
+    stream: bool = False
+  ) -> Union[str, Generator[str, None, None]]:
     return self._provider.prompt(
       text_prompt=text_prompt,
-      model=model,
-      temperature=temperature, 
       system_instructions=system_instructions,
-      file_ids=file_ids
+      model=model,
+      file_ids=file_ids,
+      stream=stream
     )
   
   def upload_files(self, dir: str) -> List[str]:
