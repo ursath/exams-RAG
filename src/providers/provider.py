@@ -68,3 +68,10 @@ class Provider(ABC):
     Delete a single file by its ID.
     """
     raise NotImplementedError("Subclasses must implement 'delete_file' method")
+
+  @abstractmethod
+  def get_embeddings(self, embedder_model: str, chunks: List[str]) -> None:
+    """
+    Get an embedding based on an specific provider embedder
+    """
+    raise NotImplementedError("Subclasses must implement 'delete_file' method")

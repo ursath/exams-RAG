@@ -11,7 +11,7 @@ import openai
 
 class OpenAIProvider(Provider):
   def __init__(self, api_key: str, max_workers: int):
-    self._max_workers = max_workers;
+    self._max_workers = max_workers
     openai.api_key = api_key
 
   def _augment_file_ids(self, file_ids: List[str]) -> List[ResponseInputFileParam]:
@@ -124,5 +124,13 @@ class OpenAIProvider(Provider):
   def delete_files(self, file_ids: list[str]) -> None:
     with ThreadPoolExecutor(max_workers=self._max_workers) as executor:
       executor.map(self.delete_file, file_ids)
+  
+  @override
+  def get_embeddings(self, embedder_model: str, chunks: List[str]):
+      embeddings = openai.embeddings.create(
+          input=chunks,
+          model=embedder_model,
+      )
+      return embeddings
   
 openai_provider = OpenAIProvider(environment_service.get_openai_api_key(), environment_service.get_max_workers())
