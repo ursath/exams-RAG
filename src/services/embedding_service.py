@@ -1,5 +1,5 @@
-from repositories.vector_store_repository import VectorStoreRepository
-from providers.openai_provider import openai_provider
+from src.repositories.vector_store_repository import VectorStoreRepository
+from src.providers.openai_provider import openai_provider
 from typing import List
 
 Embedding = List[int]
@@ -10,5 +10,3 @@ class EmbeddingService:
         response = openai_provider.get_embeddings(embedding_model, chunks)
         chunks_embeds = [r.embedding for r in response.data]
         return chunks_embeds
-
-embedding_service = EmbeddingService()

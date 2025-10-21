@@ -1,5 +1,5 @@
-from repositories.vector_store_repository import VectorStoreRepository
-from embedding_service import EmbeddingService
+from src.repositories.vector_store_repository import VectorStoreRepository
+from src.services.embedding_service import EmbeddingService
 from typing import List
 from langchain_core.documents import Document
 
@@ -31,7 +31,7 @@ class VectorStoreService:
         processed_docs = []
 
         for embedding, meta in zip(embeddings, metadata):
-            id = f"{self.repository.index_name}-{meta['subject']}-{meta['main topic']}-{"-".join(meta['topics'])}" 
+            id = f"{self.repository.index_name}-{meta['subject']}-{meta['main topic']}-{'-'.join(meta['topics'])}" 
             doc = self.prepare_doc_format(id, embedding, meta)
             processed_docs.append(doc)
 
