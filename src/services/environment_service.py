@@ -57,5 +57,14 @@ class EnvironmentService:
       return int(self.get("MAX_WORKERS"))
     except KeyError:
       return 5
+
+  def get_pinecone_api_key(self) -> str:
+    """
+    Retrieves the OpenAI API key from the `.env` file.
+    
+    Raises:
+      KeyError: if the API key is missing from the `.env` file.
+    """
+    return self.get("PINECONE_API_KEY")
     
 environment_service = EnvironmentService()
