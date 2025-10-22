@@ -1,13 +1,17 @@
 from repositories.vector_store_repository import VectorStoreRepository
 from providers.openai_provider import openai_provider
+from openai.types.embedding import Embedding 
 from typing import List
 
-Embedding = List[int]
-Chunk = List[str]
+Chunk = str
 
 class EmbeddingService:
-    def embed_chunks(chunks:List[Chunk], embedding_model:str) -> List[Embedding]:
-        response = openai_provider.get_embeddings(embedding_model, chunks)
+
+    def __init__(self, embedding_model:str):
+        self.embedding_model = embedding_model
+
+    def embed_chunks(self, chunks:List[Chunk]) -> List[Embedding]:
+        response = openai_provider.get_embeddings(self.embedding_model, chunks)
         chunks_embeds = [r.embedding for r in response.data]
         return chunks_embeds
 

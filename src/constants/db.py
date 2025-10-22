@@ -1,0 +1,1 @@
+index_name = "notes-index"
