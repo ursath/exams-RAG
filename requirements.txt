@@ -13,6 +13,7 @@ boto3
 # LangChain
 langchain
 langchain-community
+langchain-text-splitters
 
 # OpenAI
 openai
@@ -22,5 +23,10 @@ langchain-openai
 # langchain-chroma
 
 # Pinecone
-# pinecone-client
+pinecone
+protobuf
+google-api-core
+grpcio
+unstructured
+markdown
 # langchain-pinecone

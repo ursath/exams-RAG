@@ -1,7 +1,6 @@
 from pinecone.grpc import PineconeGRPC as Pinecone
 from pinecone import ServerlessSpec
-from pinecone import Index # Assuming pc is already imported and initialized
-from services.environment_service import environment_service
+from src.services.environment_service import environment_service
 from typing import List, Dict, Any
 
 
