@@ -1,9 +1,10 @@
 from pinecone.grpc import PineconeGRPC as Pinecone
 from pinecone import ServerlessSpec
 from src.services.environment_service import environment_service
+from src.types.services import Metadata
 from typing import List, Dict, Any
 from src.constants.db import index_name
-
+from openai.types.embedding import Embedding 
 
 class VectorStoreRepository:
     def __init__(self, index_name:str, vector_dim:int, sim_method:str="cosine"):
@@ -34,7 +35,7 @@ class VectorStoreRepository:
             batch = docs[i : i + batch_size]
             self.index.upsert(vectors=batch)
        
-    def retrieve(self, query_embedding: List[int], metadata: dict, top_k:int = 5): 
+    def retrieve(self, query_embedding: Embedding, metadata: Metadata, top_k:int = 5): 
         
         metadata_filter = {
             "$and": [

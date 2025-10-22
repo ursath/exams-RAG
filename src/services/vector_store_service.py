@@ -1,7 +1,10 @@
 from src.repositories.vector_store_repository import VectorStoreRepository
 from src.services.embedding_service import EmbeddingService
+from src.constants.db import index_name
+from src.types.services import Metadata
 from typing import List
 from langchain_core.documents import Document
+from openai.types.embedding import Embedding 
 
 class VectorStoreService:
     def __init__(self, index_name:str, vector_dim:int, sim_method:str="cosine"):
@@ -40,14 +43,16 @@ class VectorStoreService:
 
     def filter_out_by_threshold(self, results: object, threshold:float):
         filtered_results = []
-        for match in results.matches:
+        for match in results:
             if (match.score >= threshold):
                 filtered_results.append(match)
             else:
                 continue
         return filtered_results
 
-    def retrieve(self, query_embedding: List[int], query_metadata: dict, threshold:float = 0.25, top_k:int = 5): 
+    def retrieve(self, query_embedding: Embedding, query_metadata: Metadata, threshold:float = 0.25, top_k:int = 5): 
         response = self.repository.retrieve(query_embedding, query_metadata, top_k)
         response_filtered = self.filter_out_by_threshold(response, threshold)
         return response_filtered
+
+vector_store_service = VectorStoreService(index_name, 5)

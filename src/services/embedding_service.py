@@ -1,5 +1,6 @@
 from src.repositories.vector_store_repository import VectorStoreRepository
 from src.providers.openai_provider import openai_provider
+from src.constants.services import embedding_model
 from openai.types.embedding import Embedding 
 from typing import List
 
@@ -14,3 +15,5 @@ class EmbeddingService:
         response = openai_provider.get_embeddings(self.embedding_model, chunks)
         chunks_embeds = [r.embedding for r in response.data]
         return chunks_embeds
+
+embedding_service = EmbeddingService(embedding_model)
