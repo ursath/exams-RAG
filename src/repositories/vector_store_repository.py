@@ -2,6 +2,7 @@ from pinecone.grpc import PineconeGRPC as Pinecone
 from pinecone import ServerlessSpec
 from src.services.environment_service import environment_service
 from typing import List, Dict, Any
+from src.constants.db import index_name
 
 
 class VectorStoreRepository:
@@ -13,7 +14,7 @@ class VectorStoreRepository:
 
     def init_repository(self, index_name:str = "notes", vector_dimension:int = 1536, similarity_method = "cosine"):
 
-        if index_name not in self.pc.list_indexes().names:
+        if index_name not in self.pc.list_indexes().names():
             self.pc.create_index(
                 name=index_name,
                 dimension=vector_dimension,
@@ -38,18 +39,16 @@ class VectorStoreRepository:
         metadata_filter = {
             "$and": [
                 {"subject": {"$eq": metadata['subject']}},
-                {"$or": [
-                    {"main topic": {"$eq": metadata['main topic']}},
-                    {"topics": {"$eq": metadata['main topic']}}
-                ]}
             ]
         }
 
-        results = self.index.query(
+        results: list = self.index.query(
             vector = query_embedding,
             top_k = top_k, 
             filter= metadata_filter,
             include_metadata=True
-        )
+        ).get("matches")
 
         return results
+
+vector_store_repository = VectorStoreRepository(index_name, 5)
