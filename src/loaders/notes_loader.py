@@ -1,9 +1,8 @@
 from argparse import ArgumentParser
 from src.services.chunking_service import chunking_service
-from src.services.vector_store_service import VectorStoreService
+from src.services.vector_store_service import vector_store_service 
 from langchain_community.document_loaders import TextLoader
 from langchain_community.document_loaders import DirectoryLoader
-from pathlib import Path
 
 def main():
   """
@@ -23,16 +22,16 @@ def main():
   
   documents = loader.load()
   
-  vector_store_service = VectorStoreService(index_name=f"notes-index", vector_dim=1536)
   for document in documents:
     chunks_for_document = chunking_service.chunk(document.page_content)
     for chunk in chunks_for_document:
       chunk.metadata = {**chunk.metadata, 'subject': subject}
+    vector_store_service.store(chunks_for_document)
 
-  documents = vector_store_service.retrieve("scheduling", {"subject": subject}) 
-  print(f"Retrieved {len(documents)} documents:")
-  for doc in documents: 
-    print(doc)
+  #documents = vector_store_service.retrieve("scheduling", {"subject": subject}) 
+  #print(f"Retrieved {len(documents)} documents:")
+  #for doc in documents: 
+  #  print(doc)
   
 if __name__ == "__main__":
   main()
