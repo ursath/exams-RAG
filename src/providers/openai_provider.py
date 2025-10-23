@@ -3,6 +3,7 @@ from src.services.environment_service import environment_service
 from openai.types import ResponsesModel
 from openai.types.responses import ResponseInputFileParam, ResponseInputTextParam, Response
 from openai.types.responses.response_input_param import Message
+from langchain_openai import OpenAIEmbeddings
 from typing import Optional, List, override, overload, Generator, Union
 from glob import glob
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -126,11 +127,7 @@ class OpenAIProvider(Provider):
       executor.map(self.delete_file, file_ids)
   
   @override
-  def get_embeddings(self, embedder_model: str, chunks: List[str]):
-      embeddings = openai.embeddings.create(
-          input=chunks,
-          model=embedder_model,
-      )
-      return embeddings
+  def get_embedding_model(self, embedding_model: str):
+    return OpenAIEmbeddings(model=embedding_model)
   
 openai_provider = OpenAIProvider(environment_service.get_openai_api_key(), environment_service.get_max_workers())

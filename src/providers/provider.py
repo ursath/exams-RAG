@@ -70,8 +70,8 @@ class Provider(ABC):
     raise NotImplementedError("Subclasses must implement 'delete_file' method")
 
   @abstractmethod
-  def get_embeddings(self, embedder_model: str, chunks: List[str]) -> None:
+  def get_embedding_model(self, embedding_model: str) -> None:
     """
-    Get an embedding based on an specific provider embedder
+    Get an embedding based on an specific provider embedder - langchain version from openai embedders 
     """
-    raise NotImplementedError("Subclasses must implement 'delete_file' method")
+    raise NotImplementedError("Subclasses must implement 'get_embedding_model' method")
