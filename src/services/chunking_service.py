@@ -3,9 +3,10 @@ from langchain_text_splitters import MarkdownHeaderTextSplitter
 
 class ChunkingService:
 
-    def chunk(text:str, strip_headers:bool = False):
+    def chunk(self, text:str, strip_headers:bool = False):
         # chunk by headers
-        headers_to_split_on = [ ("#", "H1"), ("##", "H2"), ("###", "H3"), ("####", "H4")]
+        # check if topics are used in the future
+        headers_to_split_on = [ ("#", "main_topic"), ("##", "topics"), ("###", "topics"), ("####", "topics")]
 
         markdown_splitter = MarkdownHeaderTextSplitter(headers_to_split_on, strip_headers=strip_headers)
 
