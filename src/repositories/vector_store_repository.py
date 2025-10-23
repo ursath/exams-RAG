@@ -1,5 +1,6 @@
 from pinecone import ServerlessSpec, Pinecone as PineconeClient
 from src.services.environment_service import environment_service
+from src.types.services import Metadata
 from typing import List, Dict, Any
 from src.constants.db import index_name
 from langchain_pinecone import Pinecone 
@@ -46,6 +47,3 @@ class VectorStoreRepository:
         results = self.vector_store.similarity_search(query, filter=metadata_filter, k=top_k)
 
         return results
-
-# there is no property in embedder to get vector dimension -> change manually
-vector_store_repository = VectorStoreRepository(index_name, 1536)
