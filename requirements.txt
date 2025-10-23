@@ -24,9 +24,14 @@ langchain-openai
 
 # Pinecone
 pinecone
+langchain-pinecone
+langchain-core
+
+# Miscellaneous
 protobuf
 google-api-core
 grpcio
+grpcio-tools
 unstructured
 markdown
 # langchain-pinecone
