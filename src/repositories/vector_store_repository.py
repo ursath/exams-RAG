@@ -1,40 +1,41 @@
-from pinecone.grpc import PineconeGRPC as Pinecone
-from pinecone import ServerlessSpec
+from pinecone import ServerlessSpec, Pinecone as PineconeClient
 from src.services.environment_service import environment_service
 from typing import List, Dict, Any
 from src.constants.db import index_name
+from langchain_pinecone import Pinecone 
+from src.providers.openai_provider import openai_provider
 
 
 class VectorStoreRepository:
     def __init__(self, index_name:str, vector_dim:int, sim_method:str="cosine"):
         self.sim_method = sim_method
         self.index_name = index_name
-        self.pc = Pinecone(environment_service.get_pinecone_api_key())
+        self.raw_pc = PineconeClient(environment_service.get_pinecone_api_key())
+        self.embedder = openai_provider.get_embedding_model("text-embedding-3-small")
+        self.vector_store = Pinecone(environment_service.get_pinecone_api_key(), embedding=self.embedder)
         self.init_repository(index_name, vector_dim, sim_method)
 
     def init_repository(self, index_name:str = "notes", vector_dimension:int = 1536, similarity_method = "cosine"):
 
-        if index_name not in self.pc.list_indexes().names():
-            self.pc.create_index(
+        if index_name not in self.raw_pc.list_indexes().names():
+            self.raw_pc.create_index(
                 name=index_name,
                 dimension=vector_dimension,
                 metric=similarity_method,
                 spec=ServerlessSpec(
                     cloud="aws",       
-                    region="sa-east-1" 
+                    region="us-east-1" 
                 )
             )
-        self.index = self.pc.Index(index_name)
 
-    #metadata should be a list where each element is a dict like this (for each embedding): {"subject": "SO", "topics": ["pipes", "shared memory", "sockets"], "main topic": "IPC"}
-    def store(self, docs, batch_size:int=256):
-        total_vectors = len(docs)
-        
-        for i in range(0, total_vectors, batch_size):
-            batch = docs[i : i + batch_size]
-            self.index.upsert(vectors=batch)
+        self.vector_store = Pinecone.from_existing_index(index_name=index_name, embedding=self.embedder)
+
+    def store(self, docs:List[Any]):
+        self.vector_store.add_documents(docs)
        
-    def retrieve(self, query_embedding: List[int], metadata: dict, top_k:int = 5): 
+    # query: topic
+    # metadata: "subject" field
+    def retrieve(self, query:str, metadata: dict, top_k:int = 5): 
         
         metadata_filter = {
             "$and": [
@@ -42,13 +43,9 @@ class VectorStoreRepository:
             ]
         }
 
-        results: list = self.index.query(
-            vector = query_embedding,
-            top_k = top_k, 
-            filter= metadata_filter,
-            include_metadata=True
-        ).get("matches")
+        results = self.vector_store.similarity_search(query, filter=metadata_filter, k=top_k)
 
         return results
 
-vector_store_repository = VectorStoreRepository(index_name, 5)
+# there is no property in embedder to get vector dimension -> change manually
+vector_store_repository = VectorStoreRepository(index_name, 1536)
