@@ -34,9 +34,13 @@ grpcio
 grpcio-tools
 unstructured
 markdown
+asyncio
 # langchain-pinecone
 
 # API
 flask
 flask-cors
 gunicorn
+
+# Metrics
+ragas
