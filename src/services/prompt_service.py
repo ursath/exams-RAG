@@ -78,14 +78,16 @@ class PromptService:
             if topic not in documets_by_topic:
                 continue
             documents = documets_by_topic[topic]
-            notes = "\n".join(documents)
-            topic_context = f"## {topic}\n{notes}\n"
+            notes = "\n- ".join(documents)
+            topic_context = f"## {topic}\n- {notes}\n"
             contexts.append(topic_context)
         context_string = "".join(contexts)
+        
+        prettified_exercises = json.dumps(exercise_list, indent=4)
 
         subject_name = list(filter(lambda x: x['subject']==subject, subjects))[0]['i18n']['es']
-        prompt = exam_generating_instructions.format(subject=subject_name, exam_type=exam_type_names[exam_type], exercise_list=exercise_list, context_string=context_string)
-        
+        prompt = exam_generating_instructions.format(subject=subject_name, exam_type=exam_type_names[exam_type], exercise_list=prettified_exercises, context_string=context_string)
+        print(prompt)
         return llm_service.prompt(system_instructions=prompt, stream=True)
 
 prompt_service = PromptService()

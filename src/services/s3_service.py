@@ -10,8 +10,8 @@ class S3Service:
     """
     self._client = boto3.client(
       "s3",
-      # aws_access_key_id=aws_env["aws_access_key"],
-      # aws_secret_access_key=aws_env["aws_secret_key"],
+      aws_access_key_id=aws_env["aws_access_key"],
+      aws_secret_access_key=aws_env["aws_secret_key"],
       region_name=aws_env["aws_region"],
     )
     self._bucket = aws_env["aws_bucket"]
