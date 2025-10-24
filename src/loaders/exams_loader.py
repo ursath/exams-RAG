@@ -35,7 +35,6 @@ def main():
   system_instructions = f"{exams_loader_instructions}\n## Temario\n{syllabus}"
   
   exams_directory: str = path.join(subject_directory, f"exams{sep}")
-  print(exams_directory)
   exams_file_ids = llm_service.upload_files(exams_directory)
     
   exam_format = llm_service.prompt(

@@ -35,3 +35,8 @@ grpcio-tools
 unstructured
 markdown
 # langchain-pinecone
+
+# API
+flask
+flask-cors
+gunicorn

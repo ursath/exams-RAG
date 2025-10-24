@@ -3,6 +3,7 @@ from src.services.chunking_service import chunking_service
 from src.services.vector_store_service import vector_store_service 
 from langchain_community.document_loaders import TextLoader
 from langchain_community.document_loaders import DirectoryLoader
+from os import sep
 
 def main():
   """
@@ -15,7 +16,7 @@ def main():
   subject :str = args.subject
 
   loader = DirectoryLoader(
-      f"./docs/{subject}/notes",  
+      f".{sep}docs{sep}{subject}{sep}notes",  
       glob="*.md",
       loader_cls=TextLoader,
   )

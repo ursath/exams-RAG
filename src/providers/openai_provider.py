@@ -82,7 +82,6 @@ class OpenAIProvider(Provider):
     stream: bool = False
   ) -> Union[str, Generator[str, None, None]]:
     input = self._get_augmented_input(text_prompt, system_instructions, file_ids)
-    print(input)
     if not input:
       return "" if not stream else iter([])
 

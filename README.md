@@ -68,3 +68,7 @@ $> touch src/repositories/__init__.py
 ```sh
 (.venv) $> python -m src.repositories.testing_repository
 ```
+
+### How do I build for deployment?
+
+Use `docker build -t exams-generator .`, tag the image and then push to ECR. After that, deploy a new image on the API lambda function.

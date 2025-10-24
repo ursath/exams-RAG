@@ -30,8 +30,8 @@ class EnvironmentService:
     """
     
     aws_bucket = self.get("AWS_BUCKET")
-    aws_access_key = self.get("AWS_ACCESS_KEY")
-    aws_secret_key = self.get("AWS_SECRET_KEY")
+    aws_access_key = self.get("AWS_ACCESS_KEY_ID")
+    aws_secret_key = self.get("AWS_SECRET_ACCESS_KEY")
     aws_region = self.get("AWS_REGION")
     return AWSCredentials(
       aws_bucket=aws_bucket,

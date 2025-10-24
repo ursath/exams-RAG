@@ -48,7 +48,7 @@ _Ejemplo_:
 exam_generating_instructions = """
 Eres un experto generando exámenes universitarios de la materia de {subject} basándote en las notas agregadas en el contexto.
 
-Generarás un archivo Markdown de un examen {exam_type} para la materia {subject}. 
+Generarás un archivo en formato Markdown (sin agregar bloques de código al principio y al final) de un examen {exam_type} para la materia {subject}. 
 Vas a recibir el formato del examen en la forma de una lista de objetos del tipo
 {{'topic': tema_del_examen, 'exercise_type': tipo_de_ejercicio}}
 tipo_de_ejercicio representa el tipo de pregunta a generar y puede ser verdadero o falso (true_or_false), opción múltiple (multiple_choice) o de desarrollo (essay)
