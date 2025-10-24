@@ -36,7 +36,7 @@ class VectorStoreRepository:
        
     # query: topic
     # metadata: "subject" field
-    def retrieve(self, query:str, metadata: dict, top_k:int = 5): 
+    def retrieve(self, query:str, metadata: dict, top_k:int): 
         
         metadata_filter = {
             "$and": [

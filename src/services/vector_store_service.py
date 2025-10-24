@@ -10,7 +10,7 @@ class VectorStoreService:
     def store(self, docs: List[Document]):
         self.repository.store(docs)
 
-    def retrieve(self, query: str, query_metadata: dict, threshold:float = 0.25, top_k:int = 5): 
+    def retrieve(self, query: str, query_metadata: dict, top_k:int = 3): 
         response = self.repository.retrieve(query, query_metadata, top_k)
         return response
 
