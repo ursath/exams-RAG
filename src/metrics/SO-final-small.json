@@ -1,0 +1,62 @@
+[
+    {
+        "user_input": "Gestión de entrada/salida",
+        "retrieved_contexts": [
+            "## Jerarquia de procesos",
+            "# Procesos  \n## Manejo de procesos  \n![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c9fa10a8-36be-4e70-b7ab-c8ba1d07d673/Untitled.png)  \n![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/208a100f-38c2-4733-8c11-766b15399516/Untitled.png)",
+            "## Pasaje de mensajes  \n- Interviene el kernel.\n- Más simple en sistemas distribuidos (en máquinas distintas).\n- Es necesario un canal de comunicación (memoria, bus, red)."
+        ],
+        "response": "## 1. Gestión de entrada/salida (Desarrollo)\n\nExplique cómo el sistema operativo gestiona la entrada/salida en un entorno multitarea, considerando la intervención del kernel y la necesidad de canales de comunicación. Analice las diferencias entre la gestión de entrada/salida en sistemas centralizados y distribuidos, y discuta la importancia de la abstracción de dispositivos para los procesos de usuario.",
+        "llm_context_precision_without_reference": 0.0,
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.7640392369197923
+    },
+    {
+        "user_input": "Gestión y administración de procesos",
+        "retrieved_contexts": [
+            "## Jerarquia de procesos",
+            "# Procesos  \n## Manejo de procesos  \n![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c9fa10a8-36be-4e70-b7ab-c8ba1d07d673/Untitled.png)  \n![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/208a100f-38c2-4733-8c11-766b15399516/Untitled.png)",
+            "## Modelo de procesos  \nTodo software ejecutable se organiza en procesos (secuenciales).  \n**Proceso:** abstracción de programa en ejecución.  \n**Programa:** almacenado en disco, no hace nada"
+        ],
+        "response": "## 2. Gestión y administración de procesos (Desarrollo)\n\nDescriba el modelo de procesos en un sistema operativo, detallando la diferencia entre programa y proceso. Explique cómo se maneja la jerarquía de procesos, el ciclo de vida de un proceso y los mecanismos que utiliza el sistema operativo para crear, administrar y finalizar procesos. Incluya en su respuesta la importancia de la abstracción del proceso para la ejecución de software.",
+        "llm_context_precision_without_reference": 0.3333333333,
+        "faithfulness": 0.1,
+        "answer_relevancy": 0.8816531575440423
+    },
+    {
+        "user_input": "Gestión y administración de la memoria",
+        "retrieved_contexts": [
+            "# Memory Manager  \n- ¿Qué parte de la memoria está en uso?\n- Reservar memoria\n- Liberar memoria",
+            "# Memoria con abstracciones  \n## Espacio de direcciones  \n- El espacio de direcciones es el conjunto de direcciones que un proceso puede utilizar para direccionar memoria y es independiente del de otros procesos.\n- El espacio de direcciones es una abstracción de la memoria.\n- Tenemos dos problemas a resolver: **protección** y **reubicación.**  \n**Primer solución:**  \n- El hardware se equipa con 2 registros especiales: **base** y **limit**.  \n![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/01e0aa2a-eede-48dd-a178-f8a1df898d50/Untitled.png)  \n- Se cargan los programas de forma consecutiva.\n- **base** = dirección física donde se carga\n- **limit** = tamaño del programa\n- Dynamic reallocation: A cada acceso a memoria se le suma **base** y se chequea que no supere **limit**.\n- Las comparaciones son rápidas pero las sumas no tanto, salvo que se use hardware especial.\n- **Costo** en acceso de memoria.  \n<aside> ❓ Qué pasa si no entran todos los programas en memoria simultáneamente?  \n</aside>  \n- **Swapping**: Guardar toda la memoria del proceso en disco y restaurarla cuando vuelva a ejecutar.\n- **Memoria virtual:** Permitir a un proceso ejecutar incluso estando parcialmente en memoria.",
+            "### Administrar la memoria libre  \n2 Enfoques:  \n- **Bitmap:** se divide la memoria en bloques y cada bit representa su estado. Si divido en pequeños bloques estonces voy a tener una tabla más grande ya que cada bloque represena un bit en la tabla.\n- **Free list:** cada proceso y espacio libre tiene un nodo con inicio, longitud y el puntero al siguiente. La P quiere decir que hay un proceso, ocupado. La H (Hole) que es memoria libre.\n- Es necesario fusionar bloques libres adyacentes.\n- Doblemente encadenada facilita este trabajo.\n- El orden en la lista es relevante.  \n![Para una misma memoria dividida en bloques, bitmap y free list.](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/44eaefe9-68cc-4484-8aaa-e5b356d3035b/Untitled.png)  \nPara una misma memoria dividida en bloques, bitmap y free list.  \n**¿Cómo buscar un bloque libre?**  \nBuscar un bloque libre, luego se parte en 2, lo necesario y lo que sobra (si sobra).  \n- **First fit:** comenzando desde el principio, el primer bloque suficientemente grande → más velocidad.\n- **Next fit:** comenzando desde donde quedamos, el primer bloque suficientemente grande → más velocidad.\n- **Best fit:** recorre toda la lista y elige el bloque más pequeño, pero suficientemente grande → tiende a dejar muchos bloques chiquitos sobrantes → más fragmentación (anti-intuitivo).\n- **Worst fit:** recorre toda la lista y elige el bloque más grande → no resuelve mucho el problema.  \n<aside> ❕ ¡Momento!  \n</aside>  \n- **Free list mejorado:** se pueden separar las listas entre ocupados y libres.\n- Liberar y asignar un bloque consiste en moverlo de listas\n- Puedo ordenar la lista de bloques libres por tamaño (de menor a mayor).\n- Puedo utilizar la misma memoria libre para almacenar la información de su longitud y el puntero a los siguientes bloques de memoria libre. Total nadie la está usando! → No tengo que hacer una segunda lista.\n- **First fit** y **Best fit** se vuelven equivalentes si está ordenada de menor a mayor.\n- **Next fit** no tiene sentido\n- También podemos clasificar los bloques libres por tamaño frecuentemente solicitado.\n- 4 free lists de bloques de 4KB, 8KB, 12KB y 16KB respectivamente.\n- **Quick fit:** el primer bloque de la lista correspondiente."
+        ],
+        "response": "## 3. Comunicación y sincronización de procesos (IPC) (Desarrollo)\n\nAnalice los dos modelos fundamentales de IPC: memoria compartida y pasaje de mensajes. Compare los mecanismos de comunicación directa (simétrica y asimétrica) e indirecta, explicando cómo se identifican los procesos y cómo se establecen los canales de comunicación. Finalmente, discuta las ventajas y desventajas de cada modelo en términos de modularidad, escalabilidad y facilidad de implementación.",
+        "llm_context_precision_without_reference": 0.0,
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.7703663820485346
+    },
+    {
+        "user_input": "Concurrencia y sincronización",
+        "retrieved_contexts": [
+            "# Sincronización de hilos  \n## _Overview_  \nEn este apunte vamos a describir dos métodos que podemos usar para sincronizar los hilos: mutex y variables de condición.  \n**Mutex** permite que los hilos sincronicen su uso de un recurso compartido para que, por ejemplo, un thread no intente acceder a una variable compartida al mismo tiempo que otro thread la modifica.  \nLas **variables de condición** tienen un rol más complementario: permiten que los threads se informen entre sí que una variable compartida (u otro recurso compartido) fue modificada.",
+            "### Sincronización  \nSend y receive pueden ser bloqueantes o no bloqueantes.  \n- Send bloqueante: hasta que llega a la casilla/proceso.\n- Send no bloqueante: resume inmediatamente.\n- Receive bloqueante: hasta que hay mensaje disponible.\n- Receive no bloqueante: recibe mensaje o null.",
+            "### Interactivo: Guaranteed scheduling (Igualdad)  \n- Prometamos que si hay n usuarios conectados, cada uno recibirá 1/n del tiempo de CPU\n- Alternativamente, si 1 usuario tiene n procesos, cada proceso recibirá 1/n del tiempo de CPU\n- Registrar el tiempo de uso de cada usuario / proceso en términos de la proporción usada\n- Elegir aquel proceso con la menor proporción de tiempo usado"
+        ],
+        "response": "## 4. Gestión y administración de la memoria (Desarrollo)\n\nDescriba cómo el sistema operativo administra la memoria principal, haciendo énfasis en el concepto de espacio de direcciones y los problemas de protección y reubicación. Explique el funcionamiento de los registros base y límite, el mecanismo de swapping y la memoria virtual. Analice los métodos de administración de memoria libre (bitmap, free list, first fit, best fit, worst fit, quick fit) y discuta sus ventajas y desventajas.",
+        "llm_context_precision_without_reference": 0.0,
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.7834304010454587
+    },
+    {
+        "user_input": "Comunicación y sincronización de procesos (IPC)",
+        "retrieved_contexts": [
+            "# IPC  \n**Motivación:**  \n- Compartir información.\n- Acelerar computación, aprovechar el hardware.\n- Modularidad.\n- Conveniencia.  \n**Dos modelos fundamentales:**  \n- Memoria compartida.\n- Pasaje de mensajes.",
+            "### **Identidad**  \nDeben tener un mecanismo para referises, identificarse, entre sí:  \n- **Comunicación directa - simétrica:**\n- send(P, message), receive(Q, message) (P, Q procesos).\n- Cada proceso debe conocer la identidad del otro proceso.\n- El canal de comunicación se hace explícito entre un par de procesos.\n- El canal de comunicación asocia exactamente a 2 procesos.\n- 2 procesos pueden tener un único canal de comunicación.\n- **Comunicación directa - asimétrica:**\n- send(P, message), receive(id, message).  \nLa identidad de un proceso naturalmente cambia.  \n- **Comunicación indirecta:**\n- send(A, message), receive(A, message) (A casilla de correo).\n- Los mensajes se envían a puertos o casillas de correo.\n- El canal de comunicación se establece entre procesos que comparten una casilla.\n- El canal de comunicación puede asociar más de 2 procesos.\n- 2 procesos pueden tener más de 1 canal de comunicación.",
+            "## Pasaje de mensajes  \n- Interviene el kernel.\n- Más simple en sistemas distribuidos (en máquinas distintas).\n- Es necesario un canal de comunicación (memoria, bus, red)."
+        ],
+        "response": "## 5. Concurrencia y sincronización (Desarrollo)\n\nExplique los problemas que surgen al ejecutar múltiples hilos o procesos concurrentemente y cómo los mecanismos de sincronización como mutex y variables de condición ayudan a resolverlos. Describa los conceptos de send y receive bloqueantes y no bloqueantes, y analice el impacto de diferentes políticas de planificación (como guaranteed scheduling) en la equidad y eficiencia del sistema.",
+        "llm_context_precision_without_reference": 0.0,
+        "faithfulness": 0.0,
+        "answer_relevancy": 0.8224796585870134
+    }
+]
