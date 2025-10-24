@@ -6,26 +6,6 @@ class LLMService:
   def __init__(self, provider: Provider):
     self._provider = provider
     
-  @overload
-  def prompt(
-    self,
-    text_prompt: Optional[str] = None,
-    system_instructions: Optional[str] = None,
-    model: str = "",
-    file_ids: List[str] = [],
-    stream: bool = False
-  ) -> str: ...
-  
-  @overload
-  def prompt(
-    self,
-    text_prompt: Optional[str] = None,
-    system_instructions: Optional[str] = None,
-    model: str = "",
-    file_ids: List[str] = [],
-    stream: bool = True
-  ) -> Generator[str, None, None]: ...
-
   def prompt(
     self,
     text_prompt: Optional[str] = None,
@@ -41,6 +21,26 @@ class LLMService:
       file_ids=file_ids,
       stream=stream
     )
+  
+  @overload
+  def prompt(
+    self,
+    text_prompt: Optional[str] = None,
+    system_instructions: Optional[str] = None,
+    model: str = "",
+    file_ids: List[str] = [],
+    stream: bool = True
+  ) -> Generator[str, None, None]: ...
+
+  @overload
+  def prompt(
+    self,
+    text_prompt: Optional[str] = None,
+    system_instructions: Optional[str] = None,
+    model: str = "",
+    file_ids: List[str] = [],
+    stream: bool = False
+  ) -> str: ...
   
   def upload_files(self, dir: str) -> List[str]:
     return self._provider.upload_files(dir)

@@ -3,7 +3,7 @@ from src.services.environment_service import environment_service
 from src.types.services import Metadata
 from typing import List, Dict, Any
 from src.constants.db import index_name
-from langchain_pinecone import Pinecone 
+from langchain_pinecone import Pinecone
 from src.providers.openai_provider import openai_provider
 
 
@@ -13,7 +13,7 @@ class VectorStoreRepository:
         self.index_name = index_name
         self.raw_pc = PineconeClient(environment_service.get_pinecone_api_key())
         self.embedder = openai_provider.get_embedding_model("text-embedding-3-small")
-        self.vector_store = Pinecone(environment_service.get_pinecone_api_key(), embedding=self.embedder)
+        self.vector_store = Pinecone(index_name=index_name, pinecone_api_key=environment_service.get_pinecone_api_key(), embedding=self.embedder)
         self.init_repository(index_name, vector_dim, sim_method)
 
     def init_repository(self, index_name:str = "notes", vector_dimension:int = 1536, similarity_method = "cosine"):
