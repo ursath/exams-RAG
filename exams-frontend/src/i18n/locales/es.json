@@ -1,0 +1,80 @@
+{
+	"app": {
+		"description": "Genera exámenes con inteligencia artificial",
+		"subtitle": "Asistente con IA",
+		"title": "Exam Generator"
+	},
+	"auth": {
+		"accessToken": "Access Token",
+		"activeAccount": "Cuenta activa",
+		"authInfo": "Información de Autenticación",
+		"backToHome": "Volver al Generador",
+		"email": "Email",
+		"goToGenerator": "Ir al Generador de Exámenes",
+		"idToken": "ID Token",
+		"loading": "Cargando información de autenticación...",
+		"loginSuccess": "Inicio de sesión exitoso",
+		"name": "Nombre",
+		"noScopes": "No scopes disponibles",
+		"scopesGranted": "Scopes Otorgados",
+		"sessionDetails": "Detalles de tu sesión y tokens",
+		"signOut": "Cerrar sesión",
+		"user": "Usuario",
+		"userId": "ID de Usuario",
+		"userInfo": "Información del Usuario",
+		"username": "Username",
+		"welcome": "¡Bienvenido!"
+	},
+	"common": {
+		"cancel": "Cancelar",
+		"close": "Cerrar",
+		"confirm": "Confirmar",
+		"delete": "Eliminar",
+		"edit": "Editar",
+		"error": "Error",
+		"loading": "Cargando...",
+		"save": "Guardar",
+		"success": "Éxito"
+	},
+	"examGenerator": {
+		"arrow": "Flecha",
+		"copied": "¡Examen copiado al portapapeles!",
+		"copy": "Copiar al Portapapeles",
+		"customPlaceholder": "Ej: Matemática Discreta",
+		"customSubject": "O escribe una materia personalizada",
+		"customSubjectPlaceholder": "Escribe el nombre de la materia...",
+		"download": "Descargar Examen",
+		"error": "Error al generar el examen. Por favor, intenta de nuevo.",
+		"generate": "Generar Examen",
+		"generating": "Generando...",
+		"generatingExam": "Generando examen...",
+		"generationComplete": "Generación completada",
+		"mayTakeMoments": "Esto puede tomar unos momentos",
+		"new": "Nuevo",
+		"newExam": "Nuevo Examen",
+		"newGeneration": "Nueva Generación",
+		"noSubjectsFound": "No se encontraron materias",
+		"noThreads": "No hay exámenes todavía. ¡Comienza creando uno nuevo!",
+		"orCustom": "O ingresa una materia personalizada",
+		"selected": "Seleccionado",
+		"selectSubject": "Selecciona la materia",
+		"selectType": "Hoy quiero generar...",
+		"subtitle": "Crea exámenes personalizados con IA",
+		"title": "ExamGen",
+		"userPrompt": "Hoy quiero generar un examen {{examType}} de {{subject}}"
+	},
+	"examTypes": {
+		"final": "Final",
+		"firstMidterm": "Primer parcial",
+		"midterm1": "Primer parcial",
+		"midterm2": "Segundo parcial",
+		"secondMidterm": "Segundo parcial"
+	},
+	"subjects": {
+		"computerVision": "Visión por Computadora",
+		"dataScience": "Ciencia de Datos",
+		"deepLearning": "Deep Learning",
+		"machineLearning": "Machine Learning",
+		"nlp": "Procesamiento del Lenguaje Natural"
+	}
+}
