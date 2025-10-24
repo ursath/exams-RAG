@@ -1,0 +1,2 @@
+Materia: Gestion de Proyectos Informaticos
+Temas: Visión estratégica de la organización. Modelo de negocio. Modelos de calidad en el proceso de desarrollo del software. Modelos de calidad en el producto software. Administración de proyectos de software: estimación, planificación y seguimiento. Gerenciamiento de riesgos. Gestión de la configuración del software. Auditorías y peritajes

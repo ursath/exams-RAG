@@ -4,6 +4,8 @@ from src.services.retrieval_service import retrieval_service
 from src.services.llm_service import llm_service
 from src.helpers.exam_format_validator import ExamAnalysis, Topic
 from src.constants.instructions import exam_generating_instructions
+from src.constants.services import exam_type_names
+from src.constants.subjects import subjects
 import json
 import random
 import math
@@ -81,92 +83,12 @@ class PromptService:
             contexts.append(topic_context)
         context_string = "".join(contexts)
 
-        prompt = exam_generating_instructions.format(subject=subject, exam_type=exam_type, exercise_list=exercise_list, context_string=context_string)
+        subject_name = list(filter(lambda x: x['subject']==subject, subjects))[0]['i18n']['es']
+        prompt = exam_generating_instructions.format(subject=subject_name, exam_type=exam_type_names[exam_type], exercise_list=exercise_list, context_string=context_string)
         
         return llm_service.prompt(system_instructions=prompt, stream=True)
 
 prompt_service = PromptService()
 
-# exam_example = ExamAnalysis(
-#     subject="Computer Science",
-#     exercise_amount_avg=12,
-#     exams_amount=6,
-#     topics=[
-#         Topic(
-#             topic="Data Structures",
-#             exercises_per_exam_avg=3.5,
-#             true_or_false_amount=2,
-#             multiple_choice_amount=4,
-#             essay_amount=1,
-#             midterm1_appearances=1.2,
-#             midterm2_appearances=0.8,
-#             final_appearances=2.4,
-#         ),
-#         Topic(
-#             topic="Algorithms",
-#             exercises_per_exam_avg=3.0,
-#             true_or_false_amount=1,
-#             multiple_choice_amount=3,
-#             essay_amount=2,
-#             midterm1_appearances=2.1,
-#             midterm2_appearances=1.7,
-#             final_appearances=1.9,
-#         ),
-#         Topic(
-#             topic="Computer Architecture",
-#             exercises_per_exam_avg=2.2,
-#             true_or_false_amount=1,
-#             multiple_choice_amount=2,
-#             essay_amount=0,
-#             midterm1_appearances=1.3,
-#             midterm2_appearances=0.9,
-#             final_appearances=1.1,
-#         ),
-#         Topic(
-#             topic="Operating Systems",
-#             exercises_per_exam_avg=2.8,
-#             true_or_false_amount=0,
-#             multiple_choice_amount=3,
-#             essay_amount=1,
-#             midterm1_appearances=0.7,
-#             midterm2_appearances=1.5,
-#             final_appearances=1.3,
-#         ),
-#         Topic(
-#             topic="Databases",
-#             exercises_per_exam_avg=2.0,
-#             true_or_false_amount=2,
-#             multiple_choice_amount=2,
-#             essay_amount=1,
-#             midterm1_appearances=0.9,
-#             midterm2_appearances=1.2,
-#             final_appearances=1.6,
-#         ),
-#         Topic(
-#             topic="Software Engineering",
-#             exercises_per_exam_avg=3.1,
-#             true_or_false_amount=1,
-#             multiple_choice_amount=4,
-#             essay_amount=2,
-#             midterm1_appearances=1.8,
-#             midterm2_appearances=2.0,
-#             final_appearances=2.7,
-#         ),
-#         Topic(
-#             topic="Computer Networks",
-#             exercises_per_exam_avg=2.3,
-#             true_or_false_amount=1,
-#             multiple_choice_amount=3,
-#             essay_amount=1,
-#             midterm1_appearances=0.6,
-#             midterm2_appearances=1.0,
-#             final_appearances=1.4,
-#         ),
-#     ],
-# )
-
-# selected_final = prompt_service.select_topics(exam_example, "final")
-
-# print(f"Total selected: {len(selected_final)}")
-# for s in selected_final:
-#     print(s)
+# for msg in prompt_service.process_prompt(UserPrompt(subject="software_project_management", type="midterm1")):
+#   print(msg, end="", flush=True)

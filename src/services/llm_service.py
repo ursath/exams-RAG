@@ -55,6 +55,3 @@ class LLMService:
     self._provider.delete_file(file_id)
     
 llm_service = LLMService(openai_provider)
-
-for msg in llm_service.prompt(system_instructions="tell me a short story about a cat", stream=True):
-  print(msg, end="", flush=True)

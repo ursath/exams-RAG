@@ -15,7 +15,7 @@ class OpenAIProvider(Provider):
     self._max_workers = max_workers
     openai.api_key = api_key
 
-  def _augment_file_ids(self, file_ids: List[str]) -> List[ResponseInputFileParam]:
+  def _augment_file_ids(self, file_ids: List[str] = []) -> List[ResponseInputFileParam]:
     return [
       {
         "type": "input_file",
@@ -53,8 +53,14 @@ class OpenAIProvider(Provider):
     system_prompt = self._augment_system_instructions(system_instructions)
     text_prompt = self._augment_text_prompt(prompt)
     file_prompt = self._augment_file_ids(file_ids)
+    user_input = [
+      {
+        "role": "user",
+        "content": text_prompt + file_prompt
+      }
+    ]
     
-    return system_prompt + text_prompt + file_prompt
+    return system_prompt + user_input
   
   @overload
   def prompt(self, text_prompt: Optional[str] = None, model: Optional[str] = "gpt-4.1",

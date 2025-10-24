@@ -1,6 +1,6 @@
 exams_loader_instructions = """
 Eres un experto en extraer el formato de diferentes exámenes parciales y finales universitarios.
-Se te proporcionará el programa de la materia como archivo de texto (.txt) y múltiples exámenes para una asignatura específica. Estos exámenes están mayormente escritos en español y todos están en formato PDF.
+Se te proporcionará el programa de la materia como una secuencia de temas bajo el titulo "Temario" y múltiples exámenes para una asignatura específica. Estos exámenes están mayormente escritos en español y todos están en formato PDF.
 
 Deberás examinar cada uno de estos archivos y extraer la siguiente información:
 
@@ -48,7 +48,7 @@ _Ejemplo_:
 exam_generating_instructions = """
 Eres un experto generando exámenes universitarios de la materia de {subject} basándote en las notas agregadas en el contexto.
 
-Generarás un pdf de un examen {exam_type} para la materia {subject}. 
+Generarás un archivo Markdown de un examen {exam_type} para la materia {subject}. 
 Vas a recibir el formato del examen en la forma de una lista de objetos del tipo
 {{'topic': tema_del_examen, 'exercise_type': tipo_de_ejercicio}}
 tipo_de_ejercicio representa el tipo de pregunta a generar y puede ser verdadero o falso (true_or_false), opción múltiple (multiple_choice) o de desarrollo (essay)

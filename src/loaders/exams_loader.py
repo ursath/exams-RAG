@@ -4,7 +4,7 @@ from src.services.llm_service import llm_service
 from src.constants.instructions import exams_loader_instructions
 from src.helpers.exam_format_validator import ExamAnalysis
 from src.services.s3_service import s3_service
-from os import path
+from os import path, sep
 import json
 
 def main():
@@ -24,21 +24,23 @@ def main():
   `
   """
   parser = ArgumentParser()
-  parser.add_argument("--subject_dir", type=str, default="docs/TADL")
+  parser.add_argument("--subject_dir", type=str, default=f"docs{sep}TADL")
   args = parser.parse_args()
   
   subject_directory: str = args.subject_dir
   syllabus_path: str = path.join(subject_directory, "syllabus.txt")
-  syllabus_file_id = llm_service.upload_file(syllabus_path)
+  with open(syllabus_path, "r", encoding="utf-8") as file:
+    syllabus = file.read()
   
-  exams_directory: str = path.join(subject_directory, "/exams")
+  system_instructions = f"{exams_loader_instructions}\n## Temario\n{syllabus}"
+  
+  exams_directory: str = path.join(subject_directory, f"exams{sep}")
+  print(exams_directory)
   exams_file_ids = llm_service.upload_files(exams_directory)
-  
-  all_file_ids = [syllabus_file_id] + exams_file_ids
-  
+    
   exam_format = llm_service.prompt(
-    system_instructions=exams_loader_instructions,
-    file_ids=all_file_ids,
+    system_instructions=system_instructions,
+    file_ids=exams_file_ids,
   )
   
   parsed_json = json.loads(exam_format)

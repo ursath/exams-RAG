@@ -3,7 +3,7 @@ from src.types.services import Metadata
 from langchain_core.documents import Document
 
 class RetrievalService:
-    def retrieve(topics: list[str], metadata: Metadata) -> dict[str, list[str]]:
+    def retrieve(self, topics: list[str], metadata: Metadata) -> dict[str, list[str]]:
         retrievedInfo:dict[str, list[str]] = {}
         for topic in topics:
             response = vector_store_service.retrieve(topic, metadata) # list[Document]
