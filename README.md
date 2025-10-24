@@ -21,6 +21,16 @@ where `{subject_dir}` is the directory where the exams and syllabus are located 
 └── syllabus.txt
 ```
 
+## Run the application
+
+To run the application, run the following command:
+
+```sh
+(.venv) $> python -m src.local
+```
+
+You can modify the exam and format inside the file.
+
 ## FAQ
 
 ### How do I create a local environment?
