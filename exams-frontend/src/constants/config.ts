@@ -1,4 +1,5 @@
 import type { ResourcesConfig } from "aws-amplify";
+import { API_CONFIG } from "./api"
 
 export const awsconfig: ResourcesConfig = {
 	Auth: {
@@ -7,8 +8,8 @@ export const awsconfig: ResourcesConfig = {
 				oauth: {
 					domain: "us-east-1epj9uoc66.auth.us-east-1.amazoncognito.com",
 					providers: ["Google"],
-					redirectSignIn: ["http://localhost:3000/"],
-					redirectSignOut: ["http://localhost:3000/"],
+					redirectSignIn: [API_CONFIG.LAMBDA_URL],
+					redirectSignOut: [API_CONFIG.LAMBDA_URL],
 					responseType: "code",
 					scopes: ["openid", "email", "profile"],
 				},
