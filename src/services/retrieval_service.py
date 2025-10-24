@@ -7,7 +7,7 @@ class RetrievalService:
         retrievedInfo:dict[str, list[str]] = {}
         for topic in topics:
             response = vector_store_service.retrieve(topic, metadata) # list[Document]
-            retrievedInfo[topic] = list(map(lambda d: d['page_content'], response))
+            retrievedInfo[topic] = list(map(lambda d: d.page_content, response))
         return retrievedInfo
 
 retrieval_service = RetrievalService()
