@@ -1,0 +1,80 @@
+{
+	"app": {
+		"description": "Generate exams with artificial intelligence",
+		"subtitle": "AI Assistant",
+		"title": "Exam Generator"
+	},
+	"auth": {
+		"accessToken": "Access Token",
+		"activeAccount": "Active account",
+		"authInfo": "Authentication Information",
+		"backToHome": "Back to Generator",
+		"email": "Email",
+		"goToGenerator": "Go to Exam Generator",
+		"idToken": "ID Token",
+		"loading": "Loading authentication information...",
+		"loginSuccess": "Login successful",
+		"name": "Name",
+		"noScopes": "No scopes available",
+		"scopesGranted": "Granted Scopes",
+		"sessionDetails": "Your session and token details",
+		"signOut": "Sign Out",
+		"user": "User",
+		"userId": "User ID",
+		"userInfo": "User Information",
+		"username": "Username",
+		"welcome": "Welcome!"
+	},
+	"common": {
+		"cancel": "Cancel",
+		"close": "Close",
+		"confirm": "Confirm",
+		"delete": "Delete",
+		"edit": "Edit",
+		"error": "Error",
+		"loading": "Loading...",
+		"save": "Save",
+		"success": "Success"
+	},
+	"examGenerator": {
+		"arrow": "Arrow",
+		"copied": "Exam copied to clipboard!",
+		"copy": "Copy to Clipboard",
+		"customPlaceholder": "E.g: Discrete Mathematics",
+		"customSubject": "Or write a custom subject",
+		"customSubjectPlaceholder": "Write the subject name...",
+		"download": "Download Exam",
+		"error": "Error generating the exam. Please try again.",
+		"generate": "Generate Exam",
+		"generating": "Generating...",
+		"generatingExam": "Generating exam...",
+		"generationComplete": "Generation complete",
+		"mayTakeMoments": "This may take a few moments",
+		"new": "New",
+		"newExam": "New Exam",
+		"newGeneration": "New Generation",
+		"noSubjectsFound": "No subjects found",
+		"noThreads": "No exams yet. Start by creating a new one!",
+		"orCustom": "Or enter a custom subject",
+		"selected": "Selected",
+		"selectSubject": "Select the subject",
+		"selectType": "Today I want to generate...",
+		"subtitle": "Create custom exams with AI",
+		"title": "ExamGen",
+		"userPrompt": "Today I want to generate a {{examType}} exam of {{subject}}"
+	},
+	"examTypes": {
+		"final": "Final Exam",
+		"firstMidterm": "First Midterm",
+		"midterm1": "First Midterm",
+		"midterm2": "Second Midterm",
+		"secondMidterm": "Second Midterm"
+	},
+	"subjects": {
+		"computerVision": "Computer Vision",
+		"dataScience": "Data Science",
+		"deepLearning": "Deep Learning",
+		"machineLearning": "Machine Learning",
+		"nlp": "Natural Language Processing"
+	}
+}

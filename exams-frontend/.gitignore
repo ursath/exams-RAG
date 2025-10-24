@@ -1,0 +1,17 @@
+/node_modules/
+.env
+.DS_Store
+package-lock.json
+.turbo-deploy
+
+/public/dist/prod
+/public/dist/dev
+/public/dist/src
+
+/views/partials/imports.prod.html
+
+/public/dist/*.woff2
+/public/dist/*.ttf
+
+/utils/output.css
+/src/output.css
