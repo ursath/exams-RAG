@@ -1,1 +1,1 @@
-index_name = "notes-index"
+index_name = "notes-index-small"
