@@ -45,7 +45,7 @@ def main():
   validated_json = ExamAnalysis(**parsed_json)
   
   subject = validated_json.subject
-  s3_key = f"{subject}/format.json"
+  s3_key = f"{subject}/exams/format.json"
   
   s3_service.upload_file(s3_key, exam_format)
   

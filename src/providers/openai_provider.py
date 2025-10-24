@@ -39,7 +39,9 @@ class OpenAIProvider(Provider):
       }
     ]
     
-  def _augment_text_prompt(self, text_prompt: str) -> List[ResponseInputTextParam]:
+  def _augment_text_prompt(self, text_prompt: Optional[str] = None) -> List[ResponseInputTextParam]:
+    if text_prompt is None:
+      return []
     return [
       {
         "type": "input_text",
@@ -74,7 +76,7 @@ class OpenAIProvider(Provider):
     stream: bool = False
   ) -> Union[str, Generator[str, None, None]]:
     input = self._get_augmented_input(text_prompt, system_instructions, file_ids)
-    
+    print(input)
     if not input:
       return "" if not stream else iter([])
 
