@@ -1,0 +1,2 @@
+Materia: Sistemas Operativos
+Temas: Organización, estructura y servicios de los sistemas operativos. Distintas organizaciones: sistemas monolíticos, multicapas, modularizados, tipo cliente-servidor, micro-kernel. Concepto de proceso e hilos de ejecución. Gestión y administración de procesos. Comunicación y sincronización de procesos (IPC). Concurrencia y sincronización. Gestión de entrada/salida. Gestión y administración de la memoria. Sistema de archivos. Taller de implementación de un sistema operativo tipo Minix o Nachos
