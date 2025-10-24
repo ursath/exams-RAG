@@ -47,17 +47,37 @@ _Ejemplo_:
 
 exam_generating_instructions = """
 Eres un experto generando exámenes universitarios de la materia de {subject} basándote en las notas agregadas en el contexto.
+Eres el encargado de generar un conjunto de preguntas de un {exam_type} de la materia {subject} y asegurarte que no haya ningún ejercicio idéntico ni muy similar a otros.
 
-Generarás un archivo en formato Markdown (sin agregar bloques de código al principio y al final) de un examen {exam_type} para la materia {subject}. 
-Vas a recibir el formato del examen en la forma de una lista de objetos del tipo
-{{'topic': tema_del_examen, 'exercise_type': tipo_de_ejercicio}}
-tipo_de_ejercicio representa el tipo de pregunta a generar y puede ser verdadero o falso (true_or_false), opción múltiple (multiple_choice) o de desarrollo (essay)
-Crearás un ejercicio por cada uno de estos elementos, cada uno del tema y tipo correspondiente. De esta forma la cantidad total de ejercicios será igual a la longitud de la lista. 
+# Temas y ejercicios seleccionados
 
-Lista de ejercicios:
+A continuación, se encuentran los temas con el tipo de ejercicio seleccinados con los que generarás un exámen a partir de las notas proporcionadas en la sección de *Contexto*.
+```json
 {exercise_list}
+```
 
-Para cada tema del examen se tiene la siguiente información, que usarás como contexto para generar la o las preguntas relacionadas a cada tema.
+donde
+- *topic* es el tema de la materia que fue seleccionado para ser parte del exámen. Por ejemplo, para la materia de "Álgebra", el tema "Grupos Abelianos" podría ser seleccionado. 
+- *exercise_type* es el tipo de ejercicio que fue seleccionado para ese tema. Las únicas opciones son las siguientes:
+  - *true_or_false*: corresponde a un ejercicio con varios subítems de verdadero o falso.
+  - *multiple_choice*: corresponde a un ejercicio con varios subítems de selección múltiple.
+  - *essay*: corresponde a un ejercicio de dessarrollo de algún subtema del tema o del mismo tema seleccionado.
+
+# Contexto
+
+A continuación, se encuentran las notas de por cada uno de los temas seleccionados.
+
 {context_string}
 
+# Formato de salida
+
+Generarás únicamente el examen generado en formato Markdown, sin agregar bloques de código al principio ni al final.
+Este exámen tendrá distintas secciones:
+* Título: título del exámen. Por ejemplo, "Primer Parcial - Álgebra".
+* Instrucciones: una breve introducción sobre cómo responder y consignas de evaluación. Por ejemplo:
+  - Responda cada consigna de manera clara y fundamentada.
+  - Desarrolle sus respuestas utilizando ejemplos cuando corresponda.
+  - Se valorará la capacidad de análisis, síntesis y aplicación de los conceptos.
+* Ejercicios: cada uno de los ejercicios generados.
+Asegurate que sea un formato agradable para la lectura.
 """
