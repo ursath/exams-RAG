@@ -5,12 +5,32 @@ from src.providers.openai_provider import openai_provider
 class LLMService:
   def __init__(self, provider: Provider):
     self._provider = provider
-    
+  
+  @overload
   def prompt(
     self,
     text_prompt: Optional[str] = None,
     system_instructions: Optional[str] = None,
-    model: str = "",
+    model: str = "gpt-4.1",
+    file_ids: List[str] = [],
+    stream: bool = True
+  ) -> Generator[str, None, None]: ...
+
+  @overload
+  def prompt(
+    self,
+    text_prompt: Optional[str] = None,
+    system_instructions: Optional[str] = None,
+    model: str = "gpt-4.1",
+    file_ids: List[str] = [],
+    stream: bool = False
+  ) -> str: ...
+
+  def prompt(
+    self,
+    text_prompt: Optional[str] = None,
+    system_instructions: Optional[str] = None,
+    model: str = "gpt-4.1",
     file_ids: List[str] = [],
     stream: bool = False
   ) -> Union[str, Generator[str, None, None]]:
@@ -21,26 +41,6 @@ class LLMService:
       file_ids=file_ids,
       stream=stream
     )
-  
-  @overload
-  def prompt(
-    self,
-    text_prompt: Optional[str] = None,
-    system_instructions: Optional[str] = None,
-    model: str = "",
-    file_ids: List[str] = [],
-    stream: bool = True
-  ) -> Generator[str, None, None]: ...
-
-  @overload
-  def prompt(
-    self,
-    text_prompt: Optional[str] = None,
-    system_instructions: Optional[str] = None,
-    model: str = "",
-    file_ids: List[str] = [],
-    stream: bool = False
-  ) -> str: ...
   
   def upload_files(self, dir: str) -> List[str]:
     return self._provider.upload_files(dir)
@@ -55,3 +55,6 @@ class LLMService:
     self._provider.delete_file(file_id)
     
 llm_service = LLMService(openai_provider)
+
+for msg in llm_service.prompt(system_instructions="tell me a short story about a cat", stream=True):
+  print(msg, end="", flush=True)
